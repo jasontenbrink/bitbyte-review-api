@@ -13,6 +13,7 @@ import vendors from './routes/vendors/index'
 import feedback from './routes/feedback/index'
 import suggestedVendors from './routes/suggested-vendors/index'
 import forgotPassword from './routes/forgot-password/index'
+import resetPassword from './routes/reset-password/index'
 
 export const knex = require('knex')('postgres://localhost:5432/bitbyte')
 
@@ -44,6 +45,7 @@ app.use('/api/vendors', vendors)
 app.use('/api/suggested-vendors', suggestedVendors)
 app.use('/api/feedback', feedback)
 app.use('/api/forgot-password', forgotPassword)
+app.use('/api/reset-password', resetPassword)
 
 app.get('/*', (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, '../build/index.html'))
