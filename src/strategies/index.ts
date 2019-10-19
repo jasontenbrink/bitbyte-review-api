@@ -9,9 +9,9 @@ passport.serializeUser(function(userFromStrategy, done) {
     done(null, userFromStrategy)
 })
 
-passport.deserializeUser((userFromSerializer, done) => {
-    console.log('deserializer', userFromSerializer)
-    done(null, userFromSerializer)
+passport.deserializeUser((userFromSessionStore, done) => {
+    console.log('deserializer', userFromSessionStore)
+    done(null, userFromSessionStore)
 })
 
 passport.use('local', new LocalStrategy(config.local, localStrategy))

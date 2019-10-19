@@ -9,7 +9,7 @@ module.exports = async (req, username, password, done) => {
         `select id, email, password, first_name, last_name from users where email=?`,
         [email]
     )
-    rows[0].password
+    if (rows.length === 0) return done(null, false, 'login unsuccessful')
     const isValid = await bcrypt.compare(req.body.password, rows[0].password)
     if (isValid) {
         return done(null, {

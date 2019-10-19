@@ -9,32 +9,95 @@ const moment = require('moment')
 router
     .route('/')
     .post(async (req, res: Response) => {
+        req.user = { id: 9 }
         try {
-            await knex('reviews').insert(
-                toDB({ ...req.body, created: moment(), updated: moment() })
-            )
-            res.status(200).send('Review added')
+            const vendor = await knex('vendors')
+                .first()
+                .where('id', req.body.vendorId)
+            const [newReview] = await knex('reviews')
+                .returning([
+                    'id',
+                    'vendor_id',
+                    'user_id',
+                    'comment',
+                    'question_1',
+                    'question_2',
+                    'question_3',
+                    'question_4',
+                    'question_5',
+                    'question_6',
+                    'question_7',
+                    'question_8',
+                    'question_9',
+                    'question_10',
+                    'created',
+                    'updated',
+                ])
+                .insert(
+                    toDB({
+                        ...req.body,
+                        userId: req.user.id,
+                        created: moment(),
+                        updated: moment(),
+                    })
+                )
+            newReview.name = vendor.name
+            console.log('new review', newReview)
+            res.status(200).send(fromDB(newReview))
         } catch (e) {
+            if (e.code && e.code == 23505) {
+                // 23505 is a unique constraint violation
+                return res
+                    .status(403)
+                    .send(
+                        'You may not review a vendor twice.  You can make changes to a review from your profile.'
+                    )
+            }
+            console.log(e)
             res.status(500).send(e)
         }
     })
     .put(async (req, res) => {
         const { id, created, ...review } = req.body
+        console.log(id, review)
         try {
-            await knex('reviews')
-                .update(toDB({ ...review, updated: moment() }), [id])
+            const vendor = await knex('vendors')
+                .first()
+                .where('id', req.body.vendorId)
+            const [newReview] = await knex('reviews')
+                .returning([
+                    'id',
+                    'vendor_id',
+                    'user_id',
+                    'comment',
+                    'question_1',
+                    'question_2',
+                    'question_3',
+                    'question_4',
+                    'question_5',
+                    'question_6',
+                    'question_7',
+                    'question_8',
+                    'question_9',
+                    'question_10',
+                    'created',
+                    'updated',
+                ])
+                .update(toDB({ ...review, updated: moment() }))
                 .where('id', id)
-            res.status(200).send({ id })
+            newReview.name = vendor.name
+            res.status(200).send(fromDB(newReview))
         } catch (e) {
+            console.log(e)
             res.status(500).send(e)
         }
     })
     .delete(async (req, res: Response) => {
         try {
             await knex('reviews')
-                .where('id', req.body.id)
+                .where('id', req.query.id)
                 .delete()
-            res.status(200).send({ id: req.body.id })
+            res.status(200).send({ id: req.query.id })
         } catch (e) {
             res.status(500).send(e)
         }

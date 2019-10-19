@@ -13,7 +13,9 @@ import vendors from './routes/vendors/index'
 import feedback from './routes/feedback/index'
 import suggestedVendors from './routes/suggested-vendors/index'
 import forgotPassword from './routes/forgot-password/index'
-import resetPassword from './routes/reset-password/index'
+import changePassword from './routes/change-password/index'
+import logout from './routes/logout/index'
+const cors = require('cors')
 
 export const knex = require('knex')('postgres://localhost:5432/bitbyte')
 
@@ -38,23 +40,37 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:3000') // update to match the domain you will make the request from
-    res.header(
-        'Access-Control-Allow-Headers',
-        'Origin, X-Requested-With, Content-Type, Accept'
-    )
-    next()
-})
+// app.use(function(req, res, next) {
+//     //@ts-ignore
+//     console.log('req.user', req.user)
+//     //@ts-ignore
+//     console.log('req.session', req.session)
+//     res.header('Access-Control-Allow-Origin', 'http://localhost:3000') // update to match the domain you will make the request from
+//     res.header(
+//         'Access-Control-Allow-Headers',
+//         'Origin, X-Requested-With, Content-Type, Accept'
+//     )
+//     next()
+// })
+app.use(
+    cors({
+        credentials: true,
+        origin: '*',
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        preflightContinue: false,
+        optionsSuccessStatus: 204,
+    })
+)
 
 app.use('/api/registration', registration)
 app.use('/api/login', login)
 app.use('/api/reviews', reviews)
+app.use('/api/logout', logout)
 app.use('/api/vendors', vendors)
-app.use('/api/suggested-vendors', suggestedVendors)
+app.use('/api/suggest-vendor', suggestedVendors)
 app.use('/api/feedback', feedback)
 app.use('/api/forgot-password', forgotPassword)
-app.use('/api/reset-password', resetPassword)
+app.use('/api/change-password', changePassword)
 
 app.get('/*', (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, '../build/index.html'))

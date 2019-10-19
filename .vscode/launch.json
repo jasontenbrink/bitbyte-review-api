@@ -8,9 +8,8 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/src/server.ts",
-            "preLaunchTask": "tsc: build - tsconfig.json",
-            "outFiles": ["${workspaceFolder}/dist/**/*.js"]
+            "runtimeArgs": ["-r", "ts-node/register"],
+            "args": ["${workspaceFolder}/src/server.ts"]
         }
     ]
 }

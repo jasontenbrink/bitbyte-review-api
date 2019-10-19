@@ -8,15 +8,23 @@ import { SALT_WORK_FACTOR } from '../registration/registration'
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 router.post('/', async (req, res) => {
+    req.user = { id: 9, email: 'jason.tenbrink+changepass@gmail.com' }
+    const { password } = await knex('users')
+        .where({ id: req.user.id })
+        .first()
+    const isValid = await bcrypt.compare(req.body.oldPassword, password)
+
+    if (!isValid) return res.status(403).send('Incorrect password')
+
     const salt = await bcrypt.genSalt(SALT_WORK_FACTOR)
-    const hash = await bcrypt.hash(req.body.password, salt)
+    const newHash = await bcrypt.hash(req.body.newPassword, salt)
     await knex('users')
-        .update({ password: hash })
+        .update({ password: newHash })
         .where('id', req.user.id)
 
     const msg = {
         from: {
-            email: 'help@bitbyte.com',
+            email: 'elainearon@gmail.com',
         },
         personalizations: [
             {
