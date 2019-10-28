@@ -17,7 +17,7 @@ import changePassword from './routes/change-password/index'
 import logout from './routes/logout/index'
 const cors = require('cors')
 
-export const knex = require('knex')('postgres://localhost:5432/bitbyte')
+export const knex = require('knex')(process.env.DATABASE_URL)
 export const ensureAuthenticated = (req: any, res, next) =>
     req.isAuthenticated() ? next() : res.status(401).send()
 
@@ -33,7 +33,7 @@ app.use(express.static(paths))
 
 app.use(
     session({
-        secret: 'process.env.SECRET',
+        secret: process.env.SECRET,
         key: 'user', //this is the name of the key that will be attached to req.session or maybe req.user, can't remember
         resave: 'true',
         saveUninitialized: false,
@@ -56,15 +56,15 @@ app.use(passport.session())
 //     )
 //     next()
 // })
-app.use(
-    cors({
-        credentials: true,
-        origin: '*',
-        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-        preflightContinue: false,
-        optionsSuccessStatus: 204,
-    })
-)
+// app.use(
+//     cors({
+//         credentials: true,
+//         origin: '*',
+//         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//         preflightContinue: false,
+//         optionsSuccessStatus: 204,
+//     })
+// )
 
 app.use('/api/registration', registration)
 app.use('/api/login', login)
