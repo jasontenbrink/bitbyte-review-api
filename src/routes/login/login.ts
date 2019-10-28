@@ -20,8 +20,6 @@ router.post('/', passport.authenticate('local'), async (req, res) => {
             'reviews.question_6',
             'reviews.question_7',
             'reviews.question_8',
-            'reviews.question_9',
-            'reviews.question_10',
             'reviews.created',
             'reviews.updated',
             'vendors.name'

@@ -8,7 +8,7 @@ import { SALT_WORK_FACTOR } from '../registration/registration'
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 router.post('/', async (req, res) => {
-    req.user = { id: 9, email: 'jason.tenbrink+changepass@gmail.com' }
+    // req.user = { id: 9, email: 'jason.tenbrink+changepass@gmail.com' }
     const { password } = await knex('users')
         .where({ id: req.user.id })
         .first()
@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
 
     const msg = {
         from: {
-            email: 'elainearon@gmail.com',
+            email: 'help@bitbyte.com',
         },
         personalizations: [
             {

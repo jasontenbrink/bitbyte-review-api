@@ -18,6 +18,10 @@ import logout from './routes/logout/index'
 const cors = require('cors')
 
 export const knex = require('knex')('postgres://localhost:5432/bitbyte')
+export const ensureAuthenticated = (req: any, res, next) =>
+    req.isAuthenticated() ? next() : res.status(401).send()
+
+export const mom = { hi: 'mom' }
 
 const app: Application = express()
 app.set('port', process.env.PORT || 5000)
@@ -66,11 +70,11 @@ app.use('/api/registration', registration)
 app.use('/api/login', login)
 app.use('/api/reviews', reviews)
 app.use('/api/logout', logout)
-app.use('/api/vendors', vendors)
+app.use('/api/vendors', ensureAuthenticated, vendors)
 app.use('/api/suggest-vendor', suggestedVendors)
 app.use('/api/feedback', feedback)
 app.use('/api/forgot-password', forgotPassword)
-app.use('/api/change-password', changePassword)
+app.use('/api/change-password', ensureAuthenticated, changePassword)
 
 app.get('/*', (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, '../build/index.html'))
