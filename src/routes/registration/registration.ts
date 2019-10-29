@@ -8,6 +8,7 @@ import { knex } from '../../server'
 export const SALT_WORK_FACTOR = 10
 
 router.post('/', async (req, res) => {
+    console.log('registration', req.body)
     var user = {
         password: req.body.password,
         firstName: req.body.firstName || '',
