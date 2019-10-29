@@ -44,18 +44,6 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
-// app.use(function(req, res, next) {
-//     //@ts-ignore
-//     console.log('req.user', req.user)
-//     //@ts-ignore
-//     console.log('req.session', req.session)
-//     res.header('Access-Control-Allow-Origin', 'http://localhost:3000') // update to match the domain you will make the request from
-//     res.header(
-//         'Access-Control-Allow-Headers',
-//         'Origin, X-Requested-With, Content-Type, Accept'
-//     )
-//     next()
-// })
 // app.use(
 //     cors({
 //         credentials: true,
