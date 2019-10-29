@@ -9,6 +9,7 @@
         "build-ui": "cp -R ../bitbite-review/build .",
         "db:migrate:make": "knex migrate:make --env local",
         "db:migrate:latest": "knex migrate:latest --env local",
+        "db:migrate:latest:heroku": "knex migrate:latest --env heroku",
         "db:migrate:rollback": "knex migrate:rollback --env local",
         "nodemon": "nodemon src/server.ts"
     },
