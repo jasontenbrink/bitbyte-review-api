@@ -44,20 +44,20 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
-// app.use((req, res, next) => {
-//     console.log('Node env', process.env.NODE_ENV)
-//     console.log('x-forwarded-proto', req.headers['x-forwarded-proto'])
-//     if (
-//         req.headers['x-forwarded-proto'] !== 'https'
-//         // && process.env.NODE_ENV === 'production'
-//     ) {
-//         return res.redirect(
-//             301,
-//             ['https://', req.get('Host'), req.url].join('')
-//         )
-//     }
-//     return next()
-// })
+app.use((req, res, next) => {
+    console.log('Node env', process.env.NODE_ENV)
+    console.log('x-forwarded-proto', req.headers['x-forwarded-proto'])
+    if (
+        req.headers['x-forwarded-proto'] !== 'https'
+        // && process.env.NODE_ENV === 'production'
+    ) {
+        return res.redirect(
+            301,
+            ['https://', req.get('Host'), req.url].join('')
+        )
+    }
+    return next()
+})
 // app.use(
 //     cors({
 //         credentials: true,
