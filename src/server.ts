@@ -48,25 +48,25 @@ app.use((req, res, next) => {
     console.log('Node env', process.env.NODE_ENV)
     console.log('x-forwarded-proto', req.headers['x-forwarded-proto'])
     if (
-        req.headers['x-forwarded-proto'] !== 'https'
-        // && process.env.NODE_ENV === 'production'
+        req.headers['x-forwarded-proto'] !== 'https' &&
+        process.env.NODE_ENV === 'production'
     ) {
-        return res.redirect(
-            301,
-            ['https://', req.get('Host'), req.url].join('')
-        )
+        // return res.redirect(
+        //     301,
+        //     ['https://', req.get('Host'), req.url].join('')
+        // )
     }
     return next()
 })
-// app.use(
-//     cors({
-//         credentials: true,
-//         origin: '*',
-//         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-//         preflightContinue: false,
-//         optionsSuccessStatus: 204,
-//     })
-// )
+app.use(
+    cors({
+        credentials: true,
+        origin: '*',
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        preflightContinue: false,
+        optionsSuccessStatus: 204,
+    })
+)
 
 app.use('/api/registration', registration)
 app.use('/api/login', login)
