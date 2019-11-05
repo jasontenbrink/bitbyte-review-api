@@ -58,15 +58,15 @@ app.use((req, res, next) => {
     }
     return next()
 })
-app.use(
-    cors({
-        credentials: true,
-        origin: '*',
-        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-        preflightContinue: false,
-        optionsSuccessStatus: 204,
-    })
-)
+// app.use(
+//     cors({
+//         credentials: true,
+//         origin: '*',
+//         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//         preflightContinue: false,
+//         optionsSuccessStatus: 204,
+//     })
+// )
 
 app.use('/api/registration', registration)
 app.use('/api/login', login)
