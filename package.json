@@ -36,7 +36,7 @@
         "express": "^4.17.1",
         "express-session": "^1.16.2",
         "generate-password": "^1.4.2",
-        "knex": "^0.19.3",
+        "knex": "^0.19.5",
         "lodash.camelcase": "^4.3.0",
         "lodash.snakecase": "^4.1.1",
         "moment": "^2.24.0",
