@@ -15,8 +15,6 @@ import suggestedVendors from './routes/suggested-vendors/index'
 import forgotPassword from './routes/forgot-password/index'
 import changePassword from './routes/change-password/index'
 import logout from './routes/logout/index'
-const cors = require('cors')
-
 export const knex = require('knex')(process.env.DATABASE_URL)
 export const ensureAuthenticated = (req: any, res, next) =>
     req.isAuthenticated() ? next() : res.status(401).send()
