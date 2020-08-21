@@ -8,8 +8,9 @@ const moment = require('moment')
 
 router
     .post('/', async (req, res: Response) => {
+        console.log('here')
         try {
-            await knex('vendors').insert(
+            const thing = await knex('vendors').insert(
                 toDB({
                     ...req.body,
                     isVerified: false,
@@ -17,8 +18,10 @@ router
                     updated: moment(),
                 })
             )
+            console.log('thing', thing)
             res.status(200).send('Suggestion added')
         } catch (e) {
+            console.log(e)
             res.status(500).send(e)
         }
     })

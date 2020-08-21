@@ -6,7 +6,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "ts-node ./src/server.ts",
-        "build-ui": "cp -R ../bitbite-review/build .",
+        "build-ui": "cp -R ../bitibte-review/build .",
         "db:migrate:make": "knex migrate:make --env local",
         "db:migrate:latest": "knex migrate:latest --env local",
         "db:migrate:latest:heroku": "knex migrate:latest --env heroku",
